@@ -1,22 +1,34 @@
 <script setup>
 import Button from 'primevue/button';
 import RadioButton from 'primevue/radiobutton';
-import {  employersVariants } from '../JSONS'
+import {  employersVariants,  maleNames, femaleNames} from '../JSONS'
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
-import { ref } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { sendVoteEmployers } from '../servise.js'
 import { toast } from 'vue3-toastify';
 import {useLoading} from 'vue-loading-overlay'
+import InputText from 'primevue/inputtext';
+import IftaLabel from 'primevue/iftalabel';
+import { getRandomValue } from '../utils.js'
+
 const $loading = useLoading();
 const currenVariant = ref(Object.keys(employersVariants)[0])
+const currentName = ref('')
 
 const send = async () => {
  const loader = $loading.show();
-  await sendVoteEmployers(currenVariant.value)
+  await sendVoteEmployers(currenVariant.value, currentName.value)
   loader.hide()
   toast.success('отправилось')
 }
+
+const isMan = computed(() => currenVariant.value.startsWith('мужчина'))
+
+watch(isMan, (newGender) => {
+  console.log('log')
+  currentName.value = getRandomValue(newGender ? maleNames : femaleNames)
+}, { immediate: true})
 
 
 </script>
@@ -24,11 +36,20 @@ const send = async () => {
 <template>
   <Splitter class="wrapper">
     <SplitterPanel :size="5" :minSize="5" class="menu"> 
-      <div class="sender">
-        <Button @click="send()"> Отправить </Button>
+     
+      <IftaLabel>
+          <InputText id="username" v-model.trim="currentName" variant="filled" />
+          <label for="username">Имя</label>
+      </IftaLabel>
+      <div class="display-info">
+        <strong>Информация</strong>
+        <br />
+        <strong>Категория:</strong> {{  currenVariant  }}
+        <br />
+        <strong>Имя:</strong> {{  currentName  }}
       </div>
-      <div>
-        <strong>Выбран:</strong> {{  currenVariant  }}
+         <div class="sender">
+        <Button @click="send()"> Отправить </Button>
       </div>
 </SplitterPanel>
 <SplitterPanel  :minSize="70" class="content" > 
@@ -60,12 +81,15 @@ const send = async () => {
 
 }
 .sender{
-    margin-bottom: 20px;
+    margin-top: 50px;
 }
 .content__item{
   display: flex;
   padding: 3px 0px;
   gap: 5px;
   user-select: none;
+}
+.display-info{
+  margin-top: 20px;
 }
 </style>
