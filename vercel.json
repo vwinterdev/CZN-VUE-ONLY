@@ -2,7 +2,6 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "rewrites": [
       { "source": "/sw.js", "destination": "/sw.js" },
-      { "source": "/:path*", "destination": "/index.html" },
       { "source": "/manifest.webmanifest", "destination": "/manifest.webmanifest" },
       { "source": "/robots.txt", "destination": "/robots.txt" },
       { "source": "/icon512_maskable.png", "destination": "/icon512_maskable.png" },
