@@ -8,6 +8,11 @@ import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import 'vue3-toastify/dist/index.css';
 import router from './router.js'
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({
+  immediate: true,
+})
 
 const app = createApp(App);
 
