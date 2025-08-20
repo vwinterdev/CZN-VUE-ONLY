@@ -11,10 +11,8 @@ const manifest = {
     {"purpose":"maskable","sizes":"512x512","src":"/icon512_maskable.png","type":"image/png"},
     {"purpose":"any","sizes":"512x512","src":"/icon512_rounded.png","type":"image/png"}
   ],
-  "orientation":"any",
   "display":"standalone",
-  "dir":"auto",
-  "lang":"en-US",
+  "lang":"ru-RU",
   "name":"Накрутка",
   "short_name":"НК",
   "start_url":"/"
@@ -26,7 +24,11 @@ const manifest = {
 export default defineConfig({
   plugins: [vue(), VitePWA({
     registerType: 'autoUpdate',
-  workbox: {
+    injectRegister: 'auto',
+    devOptions: {
+      enabled: true,
+    },
+    workbox: {
       globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
     },
     manifest: manifest
