@@ -31,11 +31,11 @@ watch(isMan, (newGender) => {
   currentName.value = getRandomValue(newGender ? maleNames : femaleNames)
 }, { immediate: true})
 
-
+const isMobile = computed(() => window.innerWidth < 768)
 </script>
 
 <template>
-  <Splitter class="wrapper">
+  <Splitter class="wrapper" :layout="isMobile ? 'vertical' : 'horizontal'">
     <SplitterPanel :size="5" :minSize="5" class="menu"> 
      
       <IftaLabel>
@@ -76,16 +76,9 @@ watch(isMan, (newGender) => {
 }
 .menu{
   padding: 20px;
+  overflow: auto;
 }
-.content{.sender{
-    margin-bottom: 20px;
-}
-.content__item{
-  display: flex;
-  padding: 3px 0px;
-  gap: 5px;
-  user-select: none;
-}
+.content{
   padding: 20px;
   overflow: scroll;
   

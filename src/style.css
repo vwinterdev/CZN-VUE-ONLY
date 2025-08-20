@@ -36,3 +36,10 @@ a:hover {
     background-color: #f9f9f9;
   }
 }
+
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 8px;
+  }
+}
